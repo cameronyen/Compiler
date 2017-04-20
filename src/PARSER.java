@@ -40,24 +40,38 @@ public class PARSER {
 		parseTable.add(new ParseEntry("<stmt>",new String[] {"loop"} , 23));
 		parseTable.add(new ParseEntry("<stmt>",new String[] {"copy"} , 24));
 		parseTable.add(new ParseEntry("<stmt>",new String[] {"exit"} , 25));
+		parseTable.add(new ParseEntry("<decl>",new String[] {"number","boolean"} , 26));
 
-		parseTable.add(new ParseEntry("<SS>",new String[] {"class","method"} , 1));
-		parseTable.add(new ParseEntry("<SS>",new String[] {"class","method"} , 1));
-		parseTable.add(new ParseEntry("<SS>",new String[] {"class","method"} , 1));
-		parseTable.add(new ParseEntry("<SS>",new String[] {"class","method"} , 1));
-		parseTable.add(new ParseEntry("<SS>",new String[] {"class","method"} , 1));
-		parseTable.add(new ParseEntry("<SS>",new String[] {"class","method"} , 1));
-		parseTable.add(new ParseEntry("<SS>",new String[] {"class","method"} , 1));
-		parseTable.add(new ParseEntry("<SS>",new String[] {"class","method"} , 1));
-		parseTable.add(new ParseEntry("<SS>",new String[] {"class","method"} , 1));
-		parseTable.add(new ParseEntry("<SS>",new String[] {"class","method"} , 1));
-		parseTable.add(new ParseEntry("<SS>",new String[] {"class","method"} , 1));
-		parseTable.add(new ParseEntry("<SS>",new String[] {"class","method"} , 1));
-		parseTable.add(new ParseEntry("<SS>",new String[] {"class","method"} , 1));
-		parseTable.add(new ParseEntry("<SS>",new String[] {"class","method"} , 1));
-		parseTable.add(new ParseEntry("<SS>",new String[] {"class","method"} , 1));
-		parseTable.add(new ParseEntry("<SS>",new String[] {"class","method"} , 1));
-		parseTable.add(new ParseEntry("<SS>",new String[] {"class","method"} , 1));
+		parseTable.add(new ParseEntry("<type>",new String[] {"number"} , 27));
+		parseTable.add(new ParseEntry("<type>",new String[] {"boolean"} , 28));
+		parseTable.add(new ParseEntry("<input>",new String[] {"see"} , 29));
+		parseTable.add(new ParseEntry("<output>",new String[] {"show"} , 30));
+		parseTable.add(new ParseEntry("<cond>",new String[] {"if"} , 31));
+		parseTable.add(new ParseEntry("<loop>",new String[] {"loop"} , 32));
+		parseTable.add(new ParseEntry("<asmt>",new String[] {"copy"} , 33));
+		parseTable.add(new ParseEntry("<exit>",new String[] {"exit"} , 34));
+		parseTable.add(new ParseEntry("<expr>",new String[] {"nono","notfalse","nottrue","less","notequal"} , 35));
+		parseTable.add(new ParseEntry("<expr>",new String[] {"add","*","(","[id]","[const]"} , 36));
+
+		parseTable.add(new ParseEntry("<bool-expr>",new String[] {"nono"} , 37));
+		parseTable.add(new ParseEntry("<bool-expr>",new String[] {"notfalse"} , 38));
+		parseTable.add(new ParseEntry("<bool-expr>",new String[] {"nottrue"} , 39));
+		parseTable.add(new ParseEntry("<bool-expr>",new String[] {"less", "notequal"} , 40));
+
+		parseTable.add(new ParseEntry("<bool-tail>",new String[] {"number", "boolean","see","show","if","loop","copy","exit",";","into"} , 41));
+		parseTable.add(new ParseEntry("<bool-tail>",new String[] {"and"} , 42));
+		parseTable.add(new ParseEntry("<bool-tail>",new String[] {"or"} , 43));
+
+		parseTable.add(new ParseEntry("<test>",new String[] {"less","boolean"} , 44));
+		parseTable.add(new ParseEntry("<test>",new String[] {"notequal","boolean"} , 45));
+
+		parseTable.add(new ParseEntry("<arith-expr>",new String[] {"add"} , 46));
+		parseTable.add(new ParseEntry("<arith-expr>",new String[] {"*"} , 47));
+		parseTable.add(new ParseEntry("<arith-expr>",new String[] {"("} , 48));
+		parseTable.add(new ParseEntry("<arith-expr>",new String[] {"[id]"} , 49));
+		parseTable.add(new ParseEntry("<arith-expr>",new String[] {"[const]"} , 50));
+
+
 
 	}
 
