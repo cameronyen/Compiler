@@ -70,6 +70,7 @@ public class PARSER {
 		parseTable.add(new ParseEntry("<arith-expr>",new String[] {"("} , 48));
 		parseTable.add(new ParseEntry("<arith-expr>",new String[] {"[id]"} , 49));
 		parseTable.add(new ParseEntry("<arith-expr>",new String[] {"[const]"} , 50));
+		//test 1
 
 
 
