@@ -94,7 +94,7 @@ public class SCANNER {
 	}
 	
 	//dfa of scanner
-	public static void scanning(BufferedReader br) throws FileNotFoundException,IOException
+	public static String[] scanning(BufferedReader br) throws FileNotFoundException,IOException
 	{	
 		String state = "";
 		char input = (char) br.read();
@@ -135,7 +135,7 @@ public class SCANNER {
 					break;
 				case "class":
 					if(endCharacter(input, state,"Keyword",br))
-						return;
+						return new String[] {state, "Keyword"}; ;
 					break;
 				case "co":
 					if(input =='p')
@@ -147,7 +147,7 @@ public class SCANNER {
 					break;
 				case "copy":
 					if(endCharacter(input, state,"Keyword",br))
-						return;
+						return new String[] {state, "Keyword"};
 					break;
 				case "s":
 					if(input == 's')
@@ -171,7 +171,7 @@ public class SCANNER {
 					break;
 				case "ssalc":
 					if(endCharacter(input, state,"Keyword",br))
-						return;
+						return new String[] {state, "Keyword"};
 					break;
 				case "se":
 					if(input =='e')
@@ -179,7 +179,7 @@ public class SCANNER {
 					break;
 				case "see":
 					if(endCharacter(input, state,"Keyword",br))
-						return;
+						return new String[] {state, "Keyword"};
 					break;
 				case "sh":
 					if(input =='o')
@@ -191,7 +191,7 @@ public class SCANNER {
 					break;
 				case "show":
 					if(endCharacter(input, state,"Keyword",br))
-						return;
+						return new String[] {state, "Keyword"};
 					break;
 				case "f":
 					if(input =='o')
@@ -217,7 +217,7 @@ public class SCANNER {
 					break;
 				case "forall":
 					if(endCharacter(input, state,"Keyword",br))
-						return;
+						return new String[] {state, "Keyword"};
 					break;
 				case "form":
 					if(input =='y')
@@ -257,7 +257,7 @@ public class SCANNER {
 					break;
 				case "formyselfonly":
 					if(endCharacter(input, state,"Keyword",br))
-						return;
+						return new String[] {state, "Keyword"};
 					break;
 				case "m":
 					if(input =='e')
@@ -281,7 +281,7 @@ public class SCANNER {
 					break;
 				case "method":
 					if(endCharacter(input, state,"Keyword",br))
-						return;
+						return new String[] {state, "Keyword"};
 					break;
 				case "d":
 					if(input =='o')
@@ -305,7 +305,7 @@ public class SCANNER {
 					break;
 				case "dohtem":
 					if(endCharacter(input, state,"Keyword",br))
-						return;
+						return new String[] {state, "Keyword"};
 					break;
 				case "n":
 					if(input == 'u')
@@ -331,7 +331,7 @@ public class SCANNER {
 					break;
 				case "number":
 					if(endCharacter(input, state,"Keyword",br))
-						return;
+						return new String[] {state, "Keyword"};
 					break;
 				case "no":
 					if(input == 'n')
@@ -345,7 +345,7 @@ public class SCANNER {
 					break;
 				case "nono":
 					if(endCharacter(input, state,"Keyword",br))
-						return;
+						return new String[] {state, "Keyword"};
 					break;
 				case "not":
 					if(input == 'f')
@@ -373,7 +373,7 @@ public class SCANNER {
 					break;
 				case "notfalse":
 					if(endCharacter(input, state,"Keyword",br))
-						return;
+						return new String[] {state, "Keyword"};
 					break;
 				case "nott":
 					if(input =='r')
@@ -389,7 +389,7 @@ public class SCANNER {
 					break;
 				case "nottrue":
 					if(endCharacter(input, state,"Keyword",br))
-						return;
+						return new String[] {state, "Keyword"};
 					break;
 				case "note":
 					if(input =='q')
@@ -409,7 +409,7 @@ public class SCANNER {
 					break;
 				case "notequal":
 					if(endCharacter(input, state,"Keyword",br))
-						return;
+						return new String[] {state, "Keyword"};
 					break;
 				case "b":
 					if(input =='o')
@@ -437,7 +437,7 @@ public class SCANNER {
 					break;
 				case "boolean":
 					if(endCharacter(input, state,"Keyword",br))
-						return;
+						return new String[] {state, "Keyword"};
 					break;
 				case "i":
 					if(input == 'f')
@@ -447,7 +447,7 @@ public class SCANNER {
 					break;
 				case "if":
 					if(endCharacter(input, state,"Keyword",br))
-						return;
+						return new String[] {state, "Keyword"};
 					else if(input == 'n')
 						state += input;
 					break;
@@ -461,7 +461,7 @@ public class SCANNER {
 					break;
 				case "ifnot":
 					if(endCharacter(input, state,"Keyword",br))
-						return;
+						return new String[] {state, "Keyword"};
 					break;
 				case "in":
 					if(input =='t')
@@ -473,7 +473,7 @@ public class SCANNER {
 					break;
 				case "into":
 					if(endCharacter(input, state,"Keyword",br))
-						return;
+						return new String[] {state, "Keyword"};
 					break;
 				case "o":
 					if(input == 't')
@@ -513,7 +513,7 @@ public class SCANNER {
 					break;
 				case "otherwise":
 					if(endCharacter(input, state,"Keyword",br))
-						return;
+						return new String[] {state, "Keyword"};
 					break;
 				case "on":
 					if(input =='l')
@@ -533,11 +533,11 @@ public class SCANNER {
 					break;
 				case "onlyif":
 					if(endCharacter(input, state,"Keyword",br))
-						return;
+						return new String[] {state, "Keyword"};
 					break;
 				case "or":
 					if(endCharacter(input, state,"Keyword",br))
-						return;
+						return new String[] {state, "Keyword"};
 					break;
 				case "l":
 					if(input == 'o')
@@ -555,7 +555,7 @@ public class SCANNER {
 					break;
 				case "loop":
 					if(endCharacter(input, state,"Keyword",br))
-						return;
+						return new String[] {state, "Keyword"};
 					break;
 				case "le":
 					if(input =='s')
@@ -567,7 +567,7 @@ public class SCANNER {
 					break;
 				case "less":
 					if(endCharacter(input, state,"Keyword",br))
-						return;
+						return new String[] {state, "Keyword"};
 					break;
 				case "p":
 					if(input =='o')
@@ -583,7 +583,7 @@ public class SCANNER {
 					break;
 				case "pool":
 					if(endCharacter(input, state,"Keyword",br))
-						return;
+						return new String[] {state, "Keyword"};
 					break;
 				case "e":
 					if(input =='x')
@@ -599,7 +599,7 @@ public class SCANNER {
 					break;
 				case "exit":
 					if(endCharacter(input, state,"Keyword",br))
-						return;
+						return new String[] {state, "Keyword"};
 					break;
 				case "a":
 					if(input == 'n')
@@ -613,7 +613,7 @@ public class SCANNER {
 					break;
 				case "and":
 					if(endCharacter(input, state,"Keyword",br))
-						return;
+						return new String[] {state, "Keyword"};
 					break;
 				case "ad":
 					if(input =='d')
@@ -621,7 +621,7 @@ public class SCANNER {
 					break;
 				case "add":
 					if(endCharacter(input, state,"Keyword",br))
-						return;
+						return new String[] {state, "Keyword"};
 					break;
 					
 				//Identifier cases
@@ -634,7 +634,7 @@ public class SCANNER {
 						if(endCharacter(input, state,"ID",br))
 						{
 							bookKeeper(state, "ID");
-							return;
+							return new String[] {state, "ID"};
 						}
 						
 						else if("0123456789".contains("" + input)){
@@ -650,7 +650,7 @@ public class SCANNER {
 								
 								br.reset();
 								errorHandler(br, "Two underscores in a row not allowed", state);
-								return;
+								return new String[] {state, "Error"};
 							}	
 							br.reset();
 						}
@@ -658,7 +658,7 @@ public class SCANNER {
 						{
 							br.reset();
 							errorHandler(br, "Not a valid identifier", state);
-							return;
+							return new String[] {state, "Error"};
 						}
 						br.mark(0);
 						input = (char) br.read();
@@ -677,7 +677,7 @@ public class SCANNER {
 						if(endCharacter(input, state,"Constant",br))
 						{
 							bookKeeper(state, "Constant");
-							return;
+							return new String[] {state, "Constant"};
 						}
 						else if (input == '.')
 						{
@@ -688,7 +688,7 @@ public class SCANNER {
 								if(endCharacter(input, state,"Constant",br))
 								{
 									bookKeeper(state, "Constant");
-									return;
+									return new String[] {state, "Constant"};
 								}
 								else if("QWERTYUIOPASDFGHJKLZXCVBNM".contains("" + input)){
 									state += input;
@@ -697,7 +697,7 @@ public class SCANNER {
 								{
 									br.reset();
 									errorHandler(br, "Not a valid constant", state);
-									return;
+									return new String[] {state, "Error"};
 								}
 									
 								input = (char) br.read();
@@ -711,7 +711,7 @@ public class SCANNER {
 						{
 							br.reset();
 							errorHandler(br, "Not a valid constant", state);
-							return;
+							return new String[] {state, "Error"};
 						}
 						input = (char) br.read();
 					}
@@ -727,7 +727,7 @@ public class SCANNER {
 								if(endCharacter(input, state,"Constant",br))
 								{
 									bookKeeper(state, "Constant");
-									return;
+									return new String[] {state, "Constant"};
 								}
 								else if("QWERTYUIOPASDFGHJKLZXCVBNM".contains("" + input)){
 									state += input;
@@ -742,7 +742,7 @@ public class SCANNER {
 				case "(": case ")": case ";": case "*": 
 					print(state, "Special Symbol", lineNumber);
 					br.reset();
-					return;
+					return new String[] {state, "Special Symbol"}; 
 				case "\n":
 					lineNumber++;
 					state = input + "";
@@ -769,7 +769,7 @@ public class SCANNER {
 				default: 
 					br.reset();
 					errorHandler(br, "Not a valid token", state);
-					return;	
+					return new String[] {state, "Error"};
 			}			
 		}
 	}

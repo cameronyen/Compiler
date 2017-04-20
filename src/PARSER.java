@@ -1,13 +1,28 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Stack;
 
 
 public class PARSER {
 	Stack parseStack = new Stack();
-	parseStack.push("Z0");
+	String[] lookAhead;
 	
-	public PARSER(){
+	public PARSER() throws FileNotFoundException, IOException{
+		parseStack.push("Z0");
+		SCANNER scan = new SCANNER();
 		
+
+		try (BufferedReader br = new BufferedReader(new FileReader("source.txt"))) {
+			System.out.println("\nTokens: \n");
+			while (br.ready()) {
+				
+				lookAhead = scan.scanning(br);
+			}
+		}
+
 	}
 	
 	public static void initializeParseTable(){
