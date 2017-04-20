@@ -1,7 +1,10 @@
 import java.util.ArrayList;
+import java.util.Stack;
 
 
 public class PARSER {
+	Stack parseStack = new Stack();
+	parseStack.push("Z0");
 	
 	public PARSER(){
 		
@@ -75,5 +78,8 @@ public class PARSER {
 
 
 	}
-
+	
+	public static void parsing(){
+		
+	}
 }
