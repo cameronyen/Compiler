@@ -15,6 +15,9 @@ public class PARSER {
 		
 	}
 	
+	/**returns result of the production number (right hand side),
+	 * results ordered in array in order they need to be pushed in
+	 */
 	private static String[] getProduction(int production) {
 		if(production == 1){
 			return new String[] {"<more-blocks>","<block>"};
@@ -54,6 +57,11 @@ public class PARSER {
 						{
 							int production = parseTable.get(i).production;
 							String[] toStack = getProduction(production);
+							//parse through toStack to push productions into parseStack
+							for(int k = 0; i < toStack.length; k++)
+							{
+								parseStack.push(toStack[k]);
+							}
 						}
 					}
 				}
