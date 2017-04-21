@@ -7,26 +7,85 @@ import java.util.Stack;
 
 
 public class PARSER {
-	Stack parseStack = new Stack();
-	String[] lookAhead;
-	
-	public PARSER() throws FileNotFoundException, IOException{
-		parseStack.push("Z0");
-		SCANNER scan = new SCANNER();
-		
+	static Stack parseStack = new Stack();
+	static String[] lookAhead;
+	static ArrayList<ParseEntry> parseTable;
 
-		try (BufferedReader br = new BufferedReader(new FileReader("source.txt"))) {
-			System.out.println("\nTokens: \n");
-			while (br.ready()) {
-				
-				lookAhead = scan.scanning(br);
+	public PARSER() {
+		
+	}
+	
+	private static String[] getProduction(int production) {
+		if(production == 1){
+			return new String[] {"<more-blocks>","<block>"};
+		}
+		else if(production == 2){
+			return new String[] {};
+		}
+		else if(production == 3){
+			return new String[] {"<more-blocks>","<block>"};
+		}
+		
+		return null;
+	}
+	
+	public static void parse() throws FileNotFoundException, IOException{
+		parseStack.push("Z0");
+		int stepNumber = 1;
+		SCANNER scan = new SCANNER();
+		BufferedReader br = new BufferedReader(new FileReader("source.txt"));
+		lookAhead = scan.scanning(br);
+		System.out.println("Step: " + stepNumber + "Stack top: " + parseStack.peek() + 
+				"Lookahead: " + lookAhead + "Action: PUSH " + lookAhead);
+		parseStack.push(lookAhead);
+		lookAhead = scan.scanning(br);
+
+		while(lookAhead == new String[] {"bob"}) {
+			//Look through the parse table for a stack top matching top of parseStack
+			for( int i = 0; i < parseTable.size(); i ++)
+			{
+				//Continuation of search
+				if(parseStack.peek() == parseTable.get(i).topStack){
+					//Look through the possible lookaheads of the specific production for lookAhead, KEYWORD AND SS CASE
+					for(int j = 0; j < parseTable.get(i).lookAhead.length; j++)
+					{
+						//Keyword AND SS case
+						if(parseTable.get(i).lookAhead[j] == lookAhead[0])
+						{
+							int production = parseTable.get(i).production;
+							String[] toStack = getProduction(production);
+						}
+					}
+				}
 			}
 		}
+		
+		
+		
+		
+		
+		
+		while (br.ready()) {
+
+			switch ((String)parseStack.peek())
+			{
+				case "Z0":
+					parseStack.push(lookAhead);
+					lookAhead = scan.scanning(br);
+				case "<SS>":
+					//if(lookAhead == "class" || lookAhead == )
+					
+			}
+
+		}
+
 
 	}
 	
+	
 	public static void initializeParseTable(){
-		ArrayList<ParseEntry> parseTable = new ArrayList<ParseEntry>();
+		parseTable = new ArrayList<ParseEntry>();
+
 		//parseTable.add( new parseEntry("<SS>",new String[] {"class","method"} , 1));
 		parseTable.add(new ParseEntry("<SS>",new String[] {"class","method"} , 1));
 		parseTable.add(new ParseEntry("<move-blocks>",new String[] {"$"} , 2));
