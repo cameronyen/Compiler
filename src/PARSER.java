@@ -43,13 +43,14 @@ public class PARSER {
 		parseStack.push(lookAhead);
 		lookAhead = scan.scanning(br);
 
-		while(lookAhead == new String[] {"bob"}) {
+		//while(lookAhead == new String[] {"bob"}) {
+		while(true) {
 			//Look through the parse table for a stack top matching top of parseStack
 			for( int i = 0; i < parseTable.size(); i ++)
 			{
 				//Continuation of search
 				if(parseStack.peek() == parseTable.get(i).topStack){
-					//Look through the possible lookaheads of the specific production for lookAhead, KEYWORD AND SS CASE
+					//Look through the possible lookaheads of the specific production for lookAhead
 					for(int j = 0; j < parseTable.get(i).lookAhead.length; j++)
 					{
 						//Keyword AND SS case
@@ -63,6 +64,16 @@ public class PARSER {
 								parseStack.push(toStack[k]);
 							}
 						}
+						//ID case
+						else if(parseTable.get(i).lookAhead[j] == "[id]" && lookAhead[1] == "ID")
+						{
+							
+						}
+						//constant case
+						else if(parseTable.get(i).lookAhead[j] == "[constant]" && lookAhead[1] == "Constant")
+						{
+							
+						}
 					}
 				}
 			}
@@ -73,19 +84,19 @@ public class PARSER {
 		
 		
 		
-		while (br.ready()) {
-
-			switch ((String)parseStack.peek())
-			{
-				case "Z0":
-					parseStack.push(lookAhead);
-					lookAhead = scan.scanning(br);
-				case "<SS>":
-					//if(lookAhead == "class" || lookAhead == )
-					
-			}
-
-		}
+//		while (br.ready()) {
+//
+//			switch ((String)parseStack.peek())
+//			{
+//				case "Z0":
+//					parseStack.push(lookAhead);
+//					lookAhead = scan.scanning(br);
+//				case "<SS>":
+//					//if(lookAhead == "class" || lookAhead == )
+//					
+//			}
+//
+//		}
 
 
 	}
