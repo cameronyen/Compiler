@@ -8,7 +8,6 @@ public class main {
 	
 	public static void main(String[] args) throws FileNotFoundException,IOException 
 	{
-		//SCANNER scan = new SCANNER();
 		PARSER parse = new PARSER();
 		
 		//print out the source code
@@ -19,15 +18,6 @@ public class main {
 				System.out.println(output);
 			}
 		}
-		
-		//Scanner
-//		try (BufferedReader br = new BufferedReader(new FileReader("source.txt"))) {
-//			System.out.println("\nTokens: \n");
-//			while (br.ready()) {
-//				
-//				scan.scanning(br);
-//			}
-//		}
 		
 		//Parser
 		parse.parse();

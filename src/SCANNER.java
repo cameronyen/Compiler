@@ -767,16 +767,11 @@ public class SCANNER {
 					break;
 				//default case to catch errors
 				default: 
-					//try{
 						br.reset();
-//					}catch (Exception e)
-//					{
-//						
-//					}
+
 					errorHandler(br, "Not a valid token", state);
 					return new String[] {state, "Error"};
 			}			
 		}
-		//return new String[] {"", "eof"};
 	}
 }

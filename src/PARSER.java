@@ -182,8 +182,8 @@ public class PARSER {
 		scan = new SCANNER();
 		BufferedReader br = new BufferedReader(new FileReader("source.txt"));
 		//lookAhead = scan.scanning(br);
-		System.out.println("Step: " + stepNumber + " Stack top: " + parseStack.peek() + 
-				" Lookahead: " + "-" + " Action: PUSH " + "<SS> into stack");
+		System.out.printf("%-22s%-22s%-22s%-22s\n","Step","Stack Top","Lookahead","Action");
+		System.out.printf("%-22s%-22s%-22s%-22s\n",stepNumber,parseStack.peek(),"","PUSH <SS> into stack");
 		stepNumber++;
 		//parseStack.push(lookAhead[0]);
 		parseStack.push("<SS>");
@@ -220,8 +220,9 @@ public class PARSER {
 						{
 							int production = parseTable.get(i).production;
 
-							System.out.println("Step: " + stepNumber + " Stack top: " + parseStack.peek() + 
-									" Lookahead: " + lookAhead[0] + " Action: Use rule " + production);
+							
+							parsePrint(stepNumber,parseStack.peek(),lookAhead[0], "Use rule " + production);
+
 							stepNumber++;
 							parseStack.pop();
 							
@@ -238,8 +239,9 @@ public class PARSER {
 						{
 							int production = parseTable.get(i).production;
 							
-							System.out.println("Step: " + stepNumber + " Stack top: " + parseStack.peek() + 
-									" Lookahead: " + lookAhead[0] + " Action: Use rule " + production);
+							
+							parsePrint(stepNumber,parseStack.peek(),lookAhead[1], "Use rule " + production);
+
 							stepNumber++;
 							parseStack.pop();
 
@@ -257,8 +259,9 @@ public class PARSER {
 						{
 							int production = parseTable.get(i).production;
 							
-							System.out.println("Step: " + stepNumber + " Stack top: " + parseStack.peek() + 
-									" Lookahead: " + lookAhead[0] + " Action: Use rule " + production);
+							
+							parsePrint(stepNumber,parseStack.peek(),lookAhead[0], "Use rule " + production);
+
 							stepNumber++;
 							parseStack.pop();
 
@@ -281,8 +284,9 @@ public class PARSER {
 				//Non-constant/ID terminal case
 				if(parseStack.peek().equals(lookAhead[0]))
 				{
-					System.out.println("Step: " + stepNumber + " Stack top: " + parseStack.peek() + 
-							" Lookahead: " + lookAhead[0] + " Action: POP and CONSUME ");
+					
+					parsePrint(stepNumber,parseStack.peek(),lookAhead[0], "POP and CONSUME");
+
 					stepNumber++;
 					parseStack.pop();
 					if(br.ready())
@@ -296,8 +300,9 @@ public class PARSER {
 				//ID case
 				else if(lookAhead[1].equals("ID") && parseStack.peek().equals("[id]"))
 				{
-					System.out.println("Step: " + stepNumber + " Stack top: " + parseStack.peek() + 
-							" Lookahead: " + lookAhead[1] + " Action: POP and CONSUME ");
+					
+					parsePrint(stepNumber,parseStack.peek(),lookAhead[1], "POP and CONSUME");
+
 					stepNumber++;
 					parseStack.pop();
 					if(br.ready())
@@ -310,8 +315,8 @@ public class PARSER {
 				//constant case
 				else if(lookAhead[1].equals("Constant") && parseStack.peek().equals("[const]"))
 				{
-					System.out.println("Step: " + stepNumber + " Stack top: " + parseStack.peek() + 
-							" Lookahead: " + lookAhead[1] + " Action: POP and CONSUME ");
+					
+					parsePrint(stepNumber,parseStack.peek(),lookAhead[1], "POP and CONSUME");
 					stepNumber++;
 					parseStack.pop();
 					if(br.ready())
@@ -329,6 +334,11 @@ public class PARSER {
 		}
 	}
 	
+	private static void parsePrint(int stepNumber, String stackTop, String peek, String action) {
+		 System.out.printf("%-22s%-22s%-22s%-22s\n",stepNumber,stackTop,peek,action);
+		
+	}
+
 	public static void initializeParseTable(){
 		parseTable = new ArrayList<ParseEntry>();
 
