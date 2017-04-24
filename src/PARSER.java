@@ -45,6 +45,12 @@ public class PARSER {
 
 		//while(lookAhead == new String[] {"bob"}) {
 		while(true) {
+			//if parseStack only has bottom of stack symbol, then source code is accepted
+			if(parseStack.peek() == "Z0")
+			{
+				System.out.println("Source code is accepted by PARSER()");
+				return;
+			}
 			//Look through the parse table for a stack top matching top of parseStack
 			for( int i = 0; i < parseTable.size(); i ++)
 			{
@@ -67,12 +73,24 @@ public class PARSER {
 						//ID case
 						else if(parseTable.get(i).lookAhead[j] == "[id]" && lookAhead[1] == "ID")
 						{
-							
+							int production = parseTable.get(i).production;
+							String[] toStack = getProduction(production);
+							//parse through toStack to push productions into parseStack
+							for(int k = 0; i < toStack.length; k++)
+							{
+								parseStack.push(toStack[k]);
+							}
 						}
 						//constant case
 						else if(parseTable.get(i).lookAhead[j] == "[constant]" && lookAhead[1] == "Constant")
 						{
-							
+							int production = parseTable.get(i).production;
+							String[] toStack = getProduction(production);
+							//parse through toStack to push productions into parseStack
+							for(int k = 0; i < toStack.length; k++)
+							{
+								parseStack.push(toStack[k]);
+							}
 						}
 					}
 				}
