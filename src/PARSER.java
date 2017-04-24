@@ -10,6 +10,7 @@ public class PARSER {
 	static Stack<String> parseStack = new Stack();
 	static String[] lookAhead;
 	static ArrayList<ParseEntry> parseTable;
+	static SCANNER scan;
 
 	public PARSER() {
 		
@@ -175,69 +176,90 @@ public class PARSER {
 	/**Parses through source code and determines if it is acceptable or not
 	 */
 	public static void parse() throws FileNotFoundException, IOException{
+		initializeParseTable();
 		parseStack.push("Z0");
 		int stepNumber = 1;
-		SCANNER scan = new SCANNER();
+		scan = new SCANNER();
 		BufferedReader br = new BufferedReader(new FileReader("source.txt"));
-		lookAhead = scan.scanning(br);
-		System.out.println("Step: " + stepNumber + "Stack top: " + parseStack.peek() + 
-				"Lookahead: " + lookAhead[0] + "Action: PUSH " + lookAhead[0]);
+		//lookAhead = scan.scanning(br);
+		System.out.println("Step: " + stepNumber + " Stack top: " + parseStack.peek() + 
+				" Lookahead: " + "-" + " Action: PUSH " + "<SS> into stack");
 		stepNumber++;
-		parseStack.push(lookAhead[0]);
+		//parseStack.push(lookAhead[0]);
+		parseStack.push("<SS>");
+
 		lookAhead = scan.scanning(br);
 		
 
-		//while(lookAhead == new String[] {"bob"}) {
 		while(true) {
 			//variable to determine if nonterminal is at top of stack
 			boolean inStack = false;
 			//if parseStack only has bottom of stack symbol, then source code is accepted
-			if(parseStack.peek() == "Z0")
+			if(parseStack.peek().equals("Z0"))
 			{
 				System.out.println("Source code is accepted by PARSER()");
 				return;
 			}
 			//Look through the parse table for a stack top matching top of parseStack
+			outerloop:
 			for( int i = 0; i < parseTable.size(); i ++)
 			{
 				//if parsetable has stack top symbol (nonterminal), go in this
-				if(parseStack.peek() == parseTable.get(i).topStack){
+				if(parseStack.peek().equals(parseTable.get(i).topStack)){
 					inStack = true;
 					//Look through the possible lookaheads of the specific production for lookAhead
 					for(int j = 0; j < parseTable.get(i).lookAhead.length; j++)
 					{
 						//ID case
-						if(parseTable.get(i).lookAhead[j] == "[id]" && lookAhead[1] == "ID")
+						if(parseTable.get(i).lookAhead[j].equals("[id]") && lookAhead[1].equals("ID"))
 						{
 							int production = parseTable.get(i).production;
+
+							System.out.println("Step: " + stepNumber + " Stack top: " + parseStack.peek() + 
+									" Lookahead: " + lookAhead[0] + " Action: Use rule " + production);
+							stepNumber++;
+							
 							String[] toStack = getProduction(production);
 							//parse through toStack to push productions into parseStack
-							for(int k = 0; i < toStack.length; k++)
+							for(int k = 0; k < toStack.length; k++)
 							{
 								parseStack.push(toStack[k]);
 							}
+							break outerloop;
 						}
 						//constant case
-						else if(parseTable.get(i).lookAhead[j] == "[constant]" && lookAhead[1] == "Constant")
+						else if(parseTable.get(i).lookAhead[j].equals("[constant]") && lookAhead[1].equals("Constant"))
 						{
 							int production = parseTable.get(i).production;
+							
+							System.out.println("Step: " + stepNumber + " Stack top: " + parseStack.peek() + 
+									" Lookahead: " + lookAhead[0] + " Action: Use rule " + production);
+							stepNumber++;
+							
 							String[] toStack = getProduction(production);
 							//parse through toStack to push productions into parseStack
-							for(int k = 0; i < toStack.length; k++)
+							for(int k = 0; k < toStack.length; k++)
 							{
 								parseStack.push(toStack[k]);
 							}
+							break outerloop;
 						}
 						//Keyword AND SS case
-						else if(parseTable.get(i).lookAhead[j] == lookAhead[0])
+						else if(parseTable.get(i).lookAhead[j].equals(lookAhead[0]))
 						{
 							int production = parseTable.get(i).production;
+							
+							System.out.println("Step: " + stepNumber + " Stack top: " + parseStack.peek() + 
+									" Lookahead: " + lookAhead[0] + " Action: Use rule " + production);
+							stepNumber++;
+							
 							String[] toStack = getProduction(production);
 							//parse through toStack to push productions into parseStack
-							for(int k = 0; i < toStack.length; k++)
+							for(int k = 0; k < toStack.length; k++)
 							{
 								parseStack.push(toStack[k]);
 							}
+							break outerloop;
 						}
 						
 					}
@@ -246,13 +268,36 @@ public class PARSER {
 			//terminal at top of stack case
 			if(inStack == false)
 			{
-				if(parseStack.peek() == lookAhead[0])
+				//Non-constant/ID terminal case
+				if(parseStack.peek().equals(lookAhead[0]))
 				{
-					System.out.println("Step: " + stepNumber + "Stack top: " + parseStack.peek() + 
-							"Lookahead: " + lookAhead[0] + "Action: POP and CONSUME ");
+					System.out.println("Step: " + stepNumber + " Stack top: " + parseStack.peek() + 
+							" Lookahead: " + lookAhead[0] + " Action: POP and CONSUME ");
 					stepNumber++;
 					parseStack.pop();
 					lookAhead = scan.scanning(br);
+				}
+				//ID case
+				else if(lookAhead[1].equals("ID") && parseStack.peek().equals("[id]"))
+				{
+					System.out.println("Step: " + stepNumber + " Stack top: " + parseStack.peek() + 
+							" Lookahead: " + lookAhead[1] + " Action: POP and CONSUME ");
+					stepNumber++;
+					parseStack.pop();
+					lookAhead = scan.scanning(br);
+				}
+				//constant case
+				else if(lookAhead[1].equals("Constant") && parseStack.peek().equals("[constant]"))
+				{
+					System.out.println("Step: " + stepNumber + " Stack top: " + parseStack.peek() + 
+							" Lookahead: " + lookAhead[1] + " Action: POP and CONSUME ");
+					stepNumber++;
+					parseStack.pop();
+					lookAhead = scan.scanning(br);
+				}
+				else
+				{
+					System.out.println("Error on step " + stepNumber + ". Top of parse stack is not a valid token.");
 				}
 			}
 		}

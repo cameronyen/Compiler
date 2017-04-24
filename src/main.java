@@ -8,7 +8,8 @@ public class main {
 	
 	public static void main(String[] args) throws FileNotFoundException,IOException 
 	{
-		SCANNER scan = new SCANNER();
+		//SCANNER scan = new SCANNER();
+		PARSER parse = new PARSER();
 		
 		//print out the source code
 		try (BufferedReader source = new BufferedReader(new FileReader("source.txt"))) {
@@ -20,20 +21,23 @@ public class main {
 		}
 		
 		//Scanner
-		try (BufferedReader br = new BufferedReader(new FileReader("source.txt"))) {
-			System.out.println("\nTokens: \n");
-			while (br.ready()) {
-				
-				scan.scanning(br);
-			}
-		}
+//		try (BufferedReader br = new BufferedReader(new FileReader("source.txt"))) {
+//			System.out.println("\nTokens: \n");
+//			while (br.ready()) {
+//				
+//				scan.scanning(br);
+//			}
+//		}
+		
+		//Parser
+		parse.parse();
 		
 		//SymTab printout
 		System.out.println("\nSymbol Table printout (Name, Classification):\n");
-		for (int i = 0; i < scan.index; i++)
+		for (int i = 0; i < parse.scan.index; i++)
 		{
-			System.out.println(scan.symTab[i].getName() + " ,"
-					+ scan.symTab[i].getClassification());
+			System.out.println(parse.scan.symTab[i].getName() + " ,"
+					+ parse.scan.symTab[i].getClassification());
 		}
 		//String input = System.console().readLine();
 
