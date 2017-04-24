@@ -28,7 +28,147 @@ public class PARSER {
 		else if(production == 3){
 			return new String[] {"<more-blocks>","<block>"};
 		}
-		
+		else if(production == 4){
+			return new String[] {"<class>"};
+		}
+		else if(production == 5){
+			return new String[] {"<method>"};
+		}
+		else if(production == 6){
+			return new String[] {"ssalc","<methods>",")","<id-list>","(","<modifier>","[id]","class"};
+		}
+		else if(production == 7){
+			return new String[] {"forall"};
+		}
+		else if(production == 8){
+			return new String[] {"formyselfonly"};
+		}
+		else if(production == 9){
+			return new String[] {"<more-ids>","[id]"};
+		}
+		else if(production == 10){
+			return new String[] {};
+		}
+		else if(production == 11){
+			return new String[] {"<more-ids>","[id]"};
+		}
+		else if(production == 12){
+			return new String[] {"<more-methods>","<method>"};
+		}
+		else if(production == 13){
+			return new String[] {};
+		}
+		else if(production == 14){
+			return new String[] {"<more-methods>","<method>"};
+		}
+		else if(production == 15){
+			return new String[] {"dohtem","<stmts>","[id]","method"};
+		}
+		else if(production == 16){
+			return new String[] {"<more-stmts>",";","<stmt>"};
+		}
+		else if(production == 17){
+			return new String[] {};
+		}
+		else if(production == 18){
+			return new String[] {"<more-stmts>",";","<stmt>"};
+		}
+		else if(production == 19){
+			return new String[] {"<decl>"};
+		}
+		else if(production == 20){
+			return new String[] {"<input>"};
+		}
+		else if(production == 21){
+			return new String[] {"<output>"};
+		}
+		else if(production == 22){
+			return new String[] {"<cond>"};
+		}
+		else if(production == 23){
+			return new String[] {"<loop>"};
+		}
+		else if(production == 24){
+			return new String[] {"<asmt>"};
+		}
+		else if(production == 25){
+			return new String[] {"<exit>"};
+		}
+		else if(production == 26){
+			return new String[] {"<id-list>","<type>"};
+		}
+		else if(production == 27){
+			return new String[] {"number"};
+		}
+		else if(production == 28){
+			return new String[] {"boolean"};
+		}
+		else if(production == 29){
+			return new String[] {"<id-list>","see"};
+		}
+		else if(production == 30){
+			return new String[] {"<id-list>","show"};
+		}
+		else if(production == 31){
+			return new String[] {"<bool-expr>","onlyif","<stmts>","otherwise","<stmts>","<bool-expr>","if"};
+		}
+		else if(production == 32){
+			return new String[] {"pool","<stmts>","loop"};
+		}
+		else if(production == 33){
+			return new String[] {"<id-list>","into","<expr","copy"};
+		}
+		else if(production == 34){
+			return new String[] {"<bool-expr>","ifnot","exit"};
+		}
+		else if(production == 35){
+			return new String[] {"<bool-expr>"};
+		}
+		else if(production == 36){
+			return new String[] {"<arith-expr>"};
+		}
+		else if(production == 37){
+			return new String[] {"<bool-expr>","nono"};
+		}
+		else if(production == 38){
+			return new String[] {"<bool-tail>","notfalse"};
+		}
+		else if(production == 39){
+			return new String[] {"<bool-tail>","nottrue"};
+		}
+		else if(production == 40){
+			return new String[] {"<arith-expr>","<arith-expr>","<test>"};
+		}
+		else if(production == 41){
+			return new String[] {};
+		}
+		else if(production == 42){
+			return new String[] {"<bool-expr>","and"};
+		}
+		else if(production == 43){
+			return new String[] {"<bool-expr>","or"};
+		}
+		else if(production == 44){
+			return new String[] {"less"};
+		}
+		else if(production == 45){
+			return new String[] {"notequal"};
+		}
+		else if(production == 46){
+			return new String[] {"<arith-expr>","<arith-expr>","<add>"};
+		}
+		else if(production == 47){
+			return new String[] {"<arith-expr>","<arith-expr>","*"};
+		}
+		else if(production == 48){
+			return new String[] {")","[id]","("};
+		}
+		else if(production == 49){
+			return new String[] {"[id]"};
+		}
+		else if(production == 50){
+			return new String[] {"[const]"};
+		}
 		return null;
 	}
 	
