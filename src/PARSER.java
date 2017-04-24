@@ -7,7 +7,7 @@ import java.util.Stack;
 
 
 public class PARSER {
-	static Stack parseStack = new Stack();
+	static Stack<String> parseStack = new Stack();
 	static String[] lookAhead;
 	static ArrayList<ParseEntry> parseTable;
 
@@ -172,6 +172,8 @@ public class PARSER {
 		return null;
 	}
 	
+	/**Parses through source code and determines if it is acceptable or not
+	 */
 	public static void parse() throws FileNotFoundException, IOException{
 		parseStack.push("Z0");
 		int stepNumber = 1;
@@ -179,12 +181,16 @@ public class PARSER {
 		BufferedReader br = new BufferedReader(new FileReader("source.txt"));
 		lookAhead = scan.scanning(br);
 		System.out.println("Step: " + stepNumber + "Stack top: " + parseStack.peek() + 
-				"Lookahead: " + lookAhead + "Action: PUSH " + lookAhead);
-		parseStack.push(lookAhead);
+				"Lookahead: " + lookAhead[0] + "Action: PUSH " + lookAhead[0]);
+		stepNumber++;
+		parseStack.push(lookAhead[0]);
 		lookAhead = scan.scanning(br);
+		
 
 		//while(lookAhead == new String[] {"bob"}) {
 		while(true) {
+			//variable to determine if nonterminal is at top of stack
+			boolean inStack = false;
 			//if parseStack only has bottom of stack symbol, then source code is accepted
 			if(parseStack.peek() == "Z0")
 			{
@@ -194,24 +200,14 @@ public class PARSER {
 			//Look through the parse table for a stack top matching top of parseStack
 			for( int i = 0; i < parseTable.size(); i ++)
 			{
-				//Continuation of search
+				//if parsetable has stack top symbol (nonterminal), go in this
 				if(parseStack.peek() == parseTable.get(i).topStack){
+					inStack = true;
 					//Look through the possible lookaheads of the specific production for lookAhead
 					for(int j = 0; j < parseTable.get(i).lookAhead.length; j++)
 					{
-						//Keyword AND SS case
-						if(parseTable.get(i).lookAhead[j] == lookAhead[0])
-						{
-							int production = parseTable.get(i).production;
-							String[] toStack = getProduction(production);
-							//parse through toStack to push productions into parseStack
-							for(int k = 0; i < toStack.length; k++)
-							{
-								parseStack.push(toStack[k]);
-							}
-						}
 						//ID case
-						else if(parseTable.get(i).lookAhead[j] == "[id]" && lookAhead[1] == "ID")
+						if(parseTable.get(i).lookAhead[j] == "[id]" && lookAhead[1] == "ID")
 						{
 							int production = parseTable.get(i).production;
 							String[] toStack = getProduction(production);
@@ -232,7 +228,31 @@ public class PARSER {
 								parseStack.push(toStack[k]);
 							}
 						}
+						//Keyword AND SS case
+						else if(parseTable.get(i).lookAhead[j] == lookAhead[0])
+						{
+							int production = parseTable.get(i).production;
+							String[] toStack = getProduction(production);
+							//parse through toStack to push productions into parseStack
+							for(int k = 0; i < toStack.length; k++)
+							{
+								parseStack.push(toStack[k]);
+							}
+						}
+						
 					}
+				}
+			}
+			//terminal at top of stack case
+			if(inStack == false)
+			{
+				if(parseStack.peek() == lookAhead[0])
+				{
+					System.out.println("Step: " + stepNumber + "Stack top: " + parseStack.peek() + 
+							"Lookahead: " + lookAhead[0] + "Action: POP and CONSUME ");
+					stepNumber++;
+					parseStack.pop();
+					lookAhead = scan.scanning(br);
 				}
 			}
 		}
