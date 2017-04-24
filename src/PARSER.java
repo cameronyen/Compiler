@@ -117,7 +117,7 @@ public class PARSER {
 			return new String[] {"pool","<stmts>","loop"};
 		}
 		else if(production == 33){
-			return new String[] {"<id-list>","into","<expr","copy"};
+			return new String[] {"<id-list>","into","<expr>","copy"};
 		}
 		else if(production == 34){
 			return new String[] {"<bool-expr>","ifnot","exit"};
@@ -156,7 +156,7 @@ public class PARSER {
 			return new String[] {"notequal"};
 		}
 		else if(production == 46){
-			return new String[] {"<arith-expr>","<arith-expr>","<add>"};
+			return new String[] {"<arith-expr>","<arith-expr>","add"};
 		}
 		else if(production == 47){
 			return new String[] {"<arith-expr>","<arith-expr>","*"};
@@ -188,8 +188,13 @@ public class PARSER {
 		//parseStack.push(lookAhead[0]);
 		parseStack.push("<SS>");
 
-		lookAhead = scan.scanning(br);
-		
+		if(br.ready())
+		{
+			lookAhead = scan.scanning(br);
+		}
+		else{
+			lookAhead = new String [] {""};
+		}		
 
 		while(true) {
 			//variable to determine if nonterminal is at top of stack
@@ -218,6 +223,7 @@ public class PARSER {
 							System.out.println("Step: " + stepNumber + " Stack top: " + parseStack.peek() + 
 									" Lookahead: " + lookAhead[0] + " Action: Use rule " + production);
 							stepNumber++;
+							parseStack.pop();
 							
 							String[] toStack = getProduction(production);
 							//parse through toStack to push productions into parseStack
@@ -228,13 +234,15 @@ public class PARSER {
 							break outerloop;
 						}
 						//constant case
-						else if(parseTable.get(i).lookAhead[j].equals("[constant]") && lookAhead[1].equals("Constant"))
+						else if(parseTable.get(i).lookAhead[j].equals("[const]") && lookAhead[1].equals("Constant"))
 						{
 							int production = parseTable.get(i).production;
 							
 							System.out.println("Step: " + stepNumber + " Stack top: " + parseStack.peek() + 
 									" Lookahead: " + lookAhead[0] + " Action: Use rule " + production);
 							stepNumber++;
+							parseStack.pop();
+
 							
 							String[] toStack = getProduction(production);
 							//parse through toStack to push productions into parseStack
@@ -252,6 +260,8 @@ public class PARSER {
 							System.out.println("Step: " + stepNumber + " Stack top: " + parseStack.peek() + 
 									" Lookahead: " + lookAhead[0] + " Action: Use rule " + production);
 							stepNumber++;
+							parseStack.pop();
+
 							
 							String[] toStack = getProduction(production);
 							//parse through toStack to push productions into parseStack
@@ -275,7 +285,13 @@ public class PARSER {
 							" Lookahead: " + lookAhead[0] + " Action: POP and CONSUME ");
 					stepNumber++;
 					parseStack.pop();
-					lookAhead = scan.scanning(br);
+					if(br.ready())
+					{
+						lookAhead = scan.scanning(br);
+					}
+					else{
+						lookAhead = new String [] {""};
+					}
 				}
 				//ID case
 				else if(lookAhead[1].equals("ID") && parseStack.peek().equals("[id]"))
@@ -284,54 +300,41 @@ public class PARSER {
 							" Lookahead: " + lookAhead[1] + " Action: POP and CONSUME ");
 					stepNumber++;
 					parseStack.pop();
-					lookAhead = scan.scanning(br);
-				}
+					if(br.ready())
+					{
+						lookAhead = scan.scanning(br);
+					}
+					else{
+						lookAhead = new String [] {""};
+					}				}
 				//constant case
-				else if(lookAhead[1].equals("Constant") && parseStack.peek().equals("[constant]"))
+				else if(lookAhead[1].equals("Constant") && parseStack.peek().equals("[const]"))
 				{
 					System.out.println("Step: " + stepNumber + " Stack top: " + parseStack.peek() + 
 							" Lookahead: " + lookAhead[1] + " Action: POP and CONSUME ");
 					stepNumber++;
 					parseStack.pop();
-					lookAhead = scan.scanning(br);
-				}
+					if(br.ready())
+					{
+						lookAhead = scan.scanning(br);
+					}
+					else{
+						lookAhead = new String [] {""};
+					}				}
 				else
 				{
-					System.out.println("Error on step " + stepNumber + ". Top of parse stack is not a valid token.");
+					System.out.println("Error on step " + stepNumber + ". Top of parse stack is not a valid token." + "topStack: " +parseStack.peek() + " lookahead: " + lookAhead[0]);
 				}
 			}
 		}
-		
-		
-		
-		
-		
-		
-//		while (br.ready()) {
-//
-//			switch ((String)parseStack.peek())
-//			{
-//				case "Z0":
-//					parseStack.push(lookAhead);
-//					lookAhead = scan.scanning(br);
-//				case "<SS>":
-//					//if(lookAhead == "class" || lookAhead == )
-//					
-//			}
-//
-//		}
-
-
 	}
-	
 	
 	public static void initializeParseTable(){
 		parseTable = new ArrayList<ParseEntry>();
 
-		//parseTable.add( new parseEntry("<SS>",new String[] {"class","method"} , 1));
 		parseTable.add(new ParseEntry("<SS>",new String[] {"class","method"} , 1));
-		parseTable.add(new ParseEntry("<move-blocks>",new String[] {"$"} , 2));
-		parseTable.add(new ParseEntry("<move-blocks>",new String[] {"class","method"} , 3));
+		parseTable.add(new ParseEntry("<more-blocks>",new String[] {""} , 2));
+		parseTable.add(new ParseEntry("<more-blocks>",new String[] {"class","method"} , 3));
 
 		parseTable.add(new ParseEntry("<block>",new String[] {"class"} , 4));
 		parseTable.add(new ParseEntry("<block>",new String[] {"method"} , 5));
@@ -344,8 +347,8 @@ public class PARSER {
 		parseTable.add(new ParseEntry("<more-ids>",new String[] {"[id]"} , 11));
 
 		parseTable.add(new ParseEntry("<methods>",new String[] {"method"} , 12));
-		parseTable.add(new ParseEntry("<move-method>",new String[] {"ssalc"} , 13));
-		parseTable.add(new ParseEntry("<move-method>",new String[] {"method"} , 14));
+		parseTable.add(new ParseEntry("<more-methods>",new String[] {"ssalc"} , 13));
+		parseTable.add(new ParseEntry("<more-methods>",new String[] {"method"} , 14));
 
 		parseTable.add(new ParseEntry("<method>",new String[] {"method"} , 15));
 		parseTable.add(new ParseEntry("<stmts>",new String[] {"number", "boolean","see","show","if","loop","copy","exit"} , 16));
@@ -389,10 +392,6 @@ public class PARSER {
 		parseTable.add(new ParseEntry("<arith-expr>",new String[] {"("} , 48));
 		parseTable.add(new ParseEntry("<arith-expr>",new String[] {"[id]"} , 49));
 		parseTable.add(new ParseEntry("<arith-expr>",new String[] {"[const]"} , 50));
-		//test 1
-
-
-
 	}
 	
 	public static void parsing(){

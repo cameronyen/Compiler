@@ -23,16 +23,16 @@ public class SCANNER {
 			br.mark(0);
 			char input = (char) br.read();
 			if (isSpecial(input)) {
-				System.out.println("Error on token: " + token + " on line "
-						+ lineNumber + ". Error message: " + message);
+				//System.out.println("Error on token: " + token + " on line "
+				//		+ lineNumber + ". Error message: " + message);
 				br.reset();
 				return;
 			}
 			else if(input == ' ' || input == '\n')
 			{
 				
-				System.out.println("Error on token: " + token + " on line "
-						+ lineNumber + ". Error message: " + message);
+				//System.out.println("Error on token: " + token + " on line "
+				//		+ lineNumber + ". Error message: " + message);
 				if(input == '\n')
 					lineNumber++;
 				return;
@@ -46,7 +46,7 @@ public class SCANNER {
 	//prints out token information
 	public static void print(String cToken, String type, int line)
 	{
-		System.out.println(cToken + ", " + type+ ", line number " + line);
+		//System.out.println(cToken + ", " + type+ ", line number " + line);
 	}
 	
 	//checks to see if input character is a special symbol
@@ -767,10 +767,16 @@ public class SCANNER {
 					break;
 				//default case to catch errors
 				default: 
-					br.reset();
+					//try{
+						br.reset();
+//					}catch (Exception e)
+//					{
+//						
+//					}
 					errorHandler(br, "Not a valid token", state);
 					return new String[] {state, "Error"};
 			}			
 		}
+		//return new String[] {"", "eof"};
 	}
 }
